@@ -65,8 +65,11 @@
         [_session addOutput:self.metadataOutput];
     }
     
+    NSMutableSet<AVMetadataObjectType> *supportedMetaDataTypes = [NSMutableSet setWithArray:self.metadataObjectTypes];
+    [supportedMetaDataTypes intersectSet:[NSSet setWithArray:_metadataOutput.availableMetadataObjectTypes]];
+    
     /// 元数据输出对象的二维码识数据别类型
-    _metadataOutput.metadataObjectTypes = self.metadataObjectTypes;
+    _metadataOutput.metadataObjectTypes = [supportedMetaDataTypes allObjects];
 }
 
 - (void)setSampleBufferDelegate:(id<SGScanCodeSampleBufferDelegate>)sampleBufferDelegate {
